@@ -24,7 +24,7 @@ from typing import Deque, Iterable, Tuple    # Running on Python 3.8, for 3.9+ u
 
 
 def solution(file):
-    """Solve the first problem of Advent of Code 2022 Day 5.
+    """Solve the second problem of Advent of Code 2022 Day 5.
     
     Separate crates from instructions by splitting at the empty line. Convert
     the contents to double-ended queues for optimized pushing and popping. Then,
