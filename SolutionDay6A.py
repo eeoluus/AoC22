@@ -35,7 +35,7 @@ def solution(file):
 
 if __name__ == '__main__':
     
-    with open("C:/Users/eerou/Desktop/input.txt") as file:
+    with open("Path/File.txt") as file:
         
         marker_end = solution(file)
         print(marker_end)
