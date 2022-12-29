@@ -108,7 +108,7 @@ concat = partial(''.join)    # I just don't like how the standard way of string 
 
 if __name__ == '__main__':
     
-    with open("C:/Users/eerou/Desktop/input.txt") as file:
+    with open("Path/File.txt") as file:
         
         top_crates = solution(file)
         print(top_crates)
