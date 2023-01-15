@@ -1,5 +1,6 @@
 import Data.List (foldl', break)
-import Text.Pretty.Simple (pPrint)
+import Text.Pretty.Simple (pPrint) 
+-- The only external dependency, only necessary if you want to prettyprint the filesystem.
 
 type Instruction = String
 type Name = String
@@ -13,7 +14,7 @@ emptyFS = Folder "" []
 
 main :: IO ()
 main = do
-    instrs <- lines <$> readFile "C:\\Users\\35850\\Desktop\\input.txt"
+    instrs <- lines <$> readFile "Path\\File.txt"
     let (filesystem, _) = topMost $ foldl' reconstruct (emptyFS, []) instrs
         solution = sum . filter (<= 100000) . snd $ scan filesystem
     pPrint filesystem
