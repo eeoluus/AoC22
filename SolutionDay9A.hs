@@ -1,0 +1,57 @@
+import qualified Data.Set as Set (Set, empty, insert)
+import Data.List (foldl')
+
+type Simulation = (Rope, Set.Set Tail)
+type Rope = (Head, Tail)
+type Head = [Int]
+type Tail = [Int]
+
+main = do
+    instructions <- lines <$> readFile "Path/File.txt"
+    let rope     = ([0, 0], [0, 0])
+        tracks   = Set.empty
+        solution = length $ whereTailWas (rope, tracks) instructions
+    print solution
+
+whereTailWas :: Simulation -> [String] -> Set.Set Tail
+whereTailWas simulation instructions = snd $ foldl' track simulation instructions
+
+track :: Simulation -> String -> Simulation
+track simulation instr = n' `times` move side $ simulation
+    where [side, n] = words instr
+          n'        = read n
+
+move :: String -> Simulation -> Simulation
+move side (rope, visited) =
+    let (end, rest) = rope
+        end'        = step side end
+        rest'       = rest `reactTo` end'
+        rope'       = (end', rest')
+        visited'    = Set.insert rest' visited
+    in (rope', visited')
+
+step :: String -> Head -> Head
+step side [x, y] = 
+    case side of "U" -> [x, y + 1]
+                 "R" -> [x + 1, y]
+                 "D" -> [x, y - 1]
+                 "L" -> [x - 1, y]
+
+reactTo :: Tail -> Head -> Tail
+reactTo rest end
+    | all (<= 1) . map abs $ difference end rest = rest
+    | otherwise = rest `follow` end
+
+follow :: Tail -> Head -> Tail
+follow rest end = zipWith (+) rest distance
+    where distance = direction $ difference end rest
+
+times :: Int -> (a -> a) -> (a -> a)
+times 1 func = func
+times reps func = func . times (reps - 1) func
+
+direction :: [Int] -> [Int]
+direction = map signum
+
+difference :: [Int] -> [Int] -> [Int]
+difference = zipWith (-)
