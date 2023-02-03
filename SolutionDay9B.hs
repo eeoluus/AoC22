@@ -23,10 +23,10 @@ track simulation instr = n' `times` move side $ simulation
 move :: String -> Simulation -> Simulation
 move side (rope, visited) =
     let (end : rest) = rope
-        end'        = step side end
-        rest'       = rest `chainReactTo` end'
-        rope'       = (end' : rest')
-        visited'    = Set.insert (last rest') visited
+        end'         = step side end
+        rest'        = rest `chainReactTo` end'
+        rope'        = (end' : rest')
+        visited'     = Set.insert (last rest') visited
     in (rope', visited')
 
 step :: String -> Knot -> Knot
